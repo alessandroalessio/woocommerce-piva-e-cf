@@ -23,7 +23,7 @@ function a2_woopivacf_checkout_field( $checkout ) {
         'label' 		=> __('PEC'),
         'required'		=> false,
         'placeholder' 	=> __(''),
-        ), $checkout->get_value( 'a2_field_pec' ));
+	), $checkout->get_value( 'a2_field_pec' ));
 
 	woocommerce_form_field( 'a2_field_piva', array( 
 		'type' 			=> 'text', 
@@ -31,7 +31,7 @@ function a2_woopivacf_checkout_field( $checkout ) {
 		'label' 		=> __('Partita IVA'),
 		'required'		=> false,
 		'placeholder' 	=> __(''),
-		), $checkout->get_value( 'a2_field_piva' ));
+	), $checkout->get_value( 'a2_field_piva' ));
         
 	woocommerce_form_field( 'a2_field_cf', array( 
 		'type' 			=> 'text', 
@@ -39,7 +39,7 @@ function a2_woopivacf_checkout_field( $checkout ) {
 		'label' 		=> __('Cod. Fiscale'),
 		'required'		=> false,
 		'placeholder' 	=> __(''),
-		), $checkout->get_value( 'a2_field_cf' ));
+	), $checkout->get_value( 'a2_field_cf' ));
         				
 	woocommerce_form_field( 'a2_field_sdi', array( 
 		'type' 			=> 'text', 
@@ -47,7 +47,7 @@ function a2_woopivacf_checkout_field( $checkout ) {
 		'label' 		=> __('SDI per Fatt. Elettronica'),
 		'required'		=> false,
 		'placeholder' 	=> __(''),
-		), $checkout->get_value( 'a2_field_sdi' ));
+	), $checkout->get_value( 'a2_field_sdi' ));
 }
 
 /**
@@ -82,3 +82,11 @@ function a2_woopivacf_checkout_field_update_order_meta( $order_id ) {
 	if ($_POST['a2_field_cf']) update_post_meta( $order_id, 'Cod. Fiscale', esc_attr($_POST['a2_field_cf']));
 	if ($_POST['a2_field_sdi']) update_post_meta( $order_id, 'SDI', esc_attr($_POST['a2_field_sdi']));
 }
+
+/**
+ * Custom CSS for field in checkout
+ */
+function a2_woopivacf_styles_method() {
+	wp_add_inline_style( 'woocommerce-general', ".form-row.a2-cf{ clear: right; }" );
+}
+add_action( 'wp_enqueue_scripts', 'a2_woopivacf_styles_method' );
