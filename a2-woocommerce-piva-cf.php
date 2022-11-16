@@ -43,7 +43,7 @@ function a2_woopivacf_checkout_field( $checkout ) {
         				
 	woocommerce_form_field( 'a2_field_sdi', array( 
 		'type' 			=> 'text', 
-		'class' 		=> array('a2-pec orm-row-wide'), 
+		'class' 		=> array('a2-sdi orm-row-wide'), 
 		'label' 		=> __('SDI per Fatt. Elettronica'),
 		'required'		=> false,
 		'placeholder' 	=> __(''),
@@ -87,6 +87,9 @@ function a2_woopivacf_checkout_field_update_order_meta( $order_id ) {
  * Custom CSS for field in checkout
  */
 function a2_woopivacf_styles_method() {
-	wp_add_inline_style( 'woocommerce-general', ".form-row.a2-cf{ clear: right; }" );
+	echo '<style>
+	.form-row.a2-cf{ clear: right; }
+	.form-row.a2-sdi{ clear: both; }
+	</style>';
 }
-add_action( 'wp_enqueue_scripts', 'a2_woopivacf_styles_method' );
+add_action( 'wp_head', 'a2_woopivacf_styles_method', 100 );
