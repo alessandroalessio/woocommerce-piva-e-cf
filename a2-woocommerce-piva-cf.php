@@ -10,6 +10,10 @@ Text Domain: a2-woopivacf
 Domain Path: /lang
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'Invalid request.' );
+}
+
 add_action('woocommerce_after_checkout_billing_form', 'a2_woopivacf_checkout_field');
 function a2_woopivacf_checkout_field( $checkout ) {
     				
@@ -36,7 +40,14 @@ function a2_woopivacf_checkout_field( $checkout ) {
 		'required'		=> false,
 		'placeholder' 	=> __(''),
 		), $checkout->get_value( 'a2_field_cf' ));
-    
+        				
+	woocommerce_form_field( 'a2_field_sdi', array( 
+		'type' 			=> 'text', 
+		'class' 		=> array('a2-pec orm-row-wide'), 
+		'label' 		=> __('SDI per Fatt. Elettronica'),
+		'required'		=> false,
+		'placeholder' 	=> __(''),
+		), $checkout->get_value( 'a2_field_sdi' ));
 }
 
 /**
@@ -58,6 +69,7 @@ function a2_woopivacf_field_update_user_meta( $user_id ) {
 	if ($user_id && $_POST['a2_field_pec']) update_user_meta( $user_id, 'a2_field_pec', esc_attr($_POST['a2_field_pec']) );
 	if ($user_id && $_POST['a2_field_piva']) update_user_meta( $user_id, 'a2_field_piva', esc_attr($_POST['a2_field_piva']) );
 	if ($user_id && $_POST['a2_field_cf']) update_user_meta( $user_id, 'a2_field_cf', esc_attr($_POST['a2_field_cf']) );
+	if ($user_id && $_POST['a2_field_sdi']) update_user_meta( $user_id, 'a2_field_sdi', esc_attr($_POST['a2_field_sdi']) );
 }
 
 /**
@@ -68,15 +80,5 @@ function a2_woopivacf_checkout_field_update_order_meta( $order_id ) {
 	if ($_POST['a2_field_pec']) update_post_meta( $order_id, 'PEC', esc_attr($_POST['a2_field_pec']));
 	if ($_POST['a2_field_piva']) update_post_meta( $order_id, 'P.IVA', esc_attr($_POST['a2_field_piva']));
 	if ($_POST['a2_field_cf']) update_post_meta( $order_id, 'Cod. Fiscale', esc_attr($_POST['a2_field_cf']));
+	if ($_POST['a2_field_sdi']) update_post_meta( $order_id, 'SDI', esc_attr($_POST['a2_field_sdi']));
 }
-
-/**
- * Add the field to order emails
- */
- /*
-add_filter('woocommerce_email_order_meta_keys', 'my_custom_checkout_field_order_meta_keys');
-function my_custom_checkout_field_order_meta_keys( $keys ) {
-	$keys[] = 'My Field';
-	return $keys;
-}
-*/
