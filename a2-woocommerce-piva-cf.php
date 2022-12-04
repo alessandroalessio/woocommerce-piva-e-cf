@@ -3,7 +3,7 @@
 Plugin Name: A2 Woocommerce P.IVA e C.F.
 Plugin URI: https://www.a2area.it
 Description: Aggiunge Partita IVA e Codice Fiscale su Woocommerce
-Version: 1.0
+Version: 1.1
 Author: Alessandro Alessio
 Author URI: https://www.a2area.it
 Text Domain: a2woo_piva_cf
