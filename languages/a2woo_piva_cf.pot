@@ -1,0 +1,84 @@
+# Copyright (C) 2022 Alessandro Alessio
+# This file is distributed under the same license as the A2 Woocommerce P.IVA e C.F. plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: A2 Woocommerce P.IVA e C.F. 1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-piva-e-cf\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-12-04T09:22:25+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: a2woo_piva_cf\n"
+
+#. Plugin Name of the plugin
+msgid "A2 Woocommerce P.IVA e C.F."
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://www.a2area.it"
+msgstr ""
+
+#. Description of the plugin
+msgid "Aggiunge Partita IVA e Codice Fiscale su Woocommerce"
+msgstr ""
+
+#. Author of the plugin
+msgid "Alessandro Alessio"
+msgstr ""
+
+#: a2-woocommerce-piva-cf.php:39
+msgid "Certified Mail"
+msgstr ""
+
+#: a2-woocommerce-piva-cf.php:49
+msgid "Vat Number"
+msgstr ""
+
+#: a2-woocommerce-piva-cf.php:59
+msgid "Fiscal Code"
+msgstr ""
+
+#: a2-woocommerce-piva-cf.php:69
+msgid "SDI for electronic invoices"
+msgstr ""
+
+#: admin/plugin-options.php:6
+msgid "Vat & Fiscal Code"
+msgstr ""
+
+#: admin/plugin-options.php:22
+msgid "Display PEC"
+msgstr ""
+
+#: admin/plugin-options.php:23
+msgid "Show PEC field in Checkout Page"
+msgstr ""
+
+#: admin/plugin-options.php:30
+msgid "Display VAT Number"
+msgstr ""
+
+#: admin/plugin-options.php:31
+msgid "Show VAT Number field in Checkout Page"
+msgstr ""
+
+#: admin/plugin-options.php:38
+msgid "Display Fiscal Code"
+msgstr ""
+
+#: admin/plugin-options.php:39
+msgid "Show Fiscal Code field in Checkout Page"
+msgstr ""
+
+#: admin/plugin-options.php:46
+msgid "Display SDI for invoices"
+msgstr ""
+
+#: admin/plugin-options.php:47
+msgid "Show SDI for invoices field in Checkout Page"
+msgstr ""

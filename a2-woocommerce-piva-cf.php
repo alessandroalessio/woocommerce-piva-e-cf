@@ -6,7 +6,7 @@ Description: Aggiunge Partita IVA e Codice Fiscale su Woocommerce
 Version: 1.0
 Author: Alessandro Alessio
 Author URI: https://www.a2area.it
-Text Domain: a2-woopivacf
+Text Domain: a2woo_piva_cf
 Domain Path: /lang
 */
 
@@ -14,40 +14,64 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Invalid request.' );
 }
 
+require 'vendor/autoload.php';
+
+// Localization
+load_plugin_textdomain( 'a2woo_piva_cf', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
+
+
+// Admin interface
+require __DIR__ . '/admin/plugin-options.php';
+
+// Plugin scripts
 add_action('woocommerce_after_checkout_billing_form', 'a2_woopivacf_checkout_field');
 function a2_woopivacf_checkout_field( $checkout ) {
-    				
-    woocommerce_form_field( 'a2_field_pec', array( 
-        'type' 			=> 'text', 
-        'class' 		=> array('a2-pec orm-row-wide'), 
-        'label' 		=> __('PEC'),
-        'required'		=> false,
-        'placeholder' 	=> __(''),
-	), $checkout->get_value( 'a2_field_pec' ));
+    
+	$a2woo_piva_cf_show_pec_field = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_pec_field');
+	$a2woo_piva_cf_show_vat_field = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_vat_field');
+	$a2woo_piva_cf_show_cf = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_cf');
+	$a2woo_piva_cf_show_sdi = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_sdi');
 
-	woocommerce_form_field( 'a2_field_piva', array( 
-		'type' 			=> 'text', 
-		'class' 		=> array('a2-piva orm-row-wide form-row form-row-first'), 
-		'label' 		=> __('Partita IVA'),
-		'required'		=> false,
-		'placeholder' 	=> __(''),
-	), $checkout->get_value( 'a2_field_piva' ));
-        
-	woocommerce_form_field( 'a2_field_cf', array( 
-		'type' 			=> 'text', 
-		'class' 		=> array('a2-cf orm-row-wide form-row form-row-last'), 
-		'label' 		=> __('Cod. Fiscale'),
-		'required'		=> false,
-		'placeholder' 	=> __(''),
-	), $checkout->get_value( 'a2_field_cf' ));
-        				
-	woocommerce_form_field( 'a2_field_sdi', array( 
-		'type' 			=> 'text', 
-		'class' 		=> array('a2-sdi orm-row-wide'), 
-		'label' 		=> __('SDI per Fatt. Elettronica'),
-		'required'		=> false,
-		'placeholder' 	=> __(''),
-	), $checkout->get_value( 'a2_field_sdi' ));
+	if ( $a2woo_piva_cf_show_pec_field && $a2woo_piva_cf_show_pec_field=='on' ) :
+		woocommerce_form_field( 'a2_field_pec', array( 
+			'type' 			=> 'text', 
+			'class' 		=> array('a2-pec orm-row-wide'), 
+			'label' 		=> __('Certified Mail', 'a2woo_piva_cf'),
+			'required'		=> false,
+			'placeholder' 	=> __(''),
+		), $checkout->get_value( 'a2_field_pec' ));
+	endif;
+
+	if ( $a2woo_piva_cf_show_vat_field && $a2woo_piva_cf_show_vat_field=='on' ) :
+		woocommerce_form_field( 'a2_field_piva', array( 
+			'type' 			=> 'text', 
+			'class' 		=> array('a2-piva orm-row-wide form-row form-row-first'), 
+			'label' 		=> __('Vat Number', 'a2woo_piva_cf'),
+			'required'		=> false,
+			'placeholder' 	=> __(''),
+		), $checkout->get_value( 'a2_field_piva' ));
+	endif;
+
+	if ( $a2woo_piva_cf_show_cf && $a2woo_piva_cf_show_cf=='on' ) :
+		woocommerce_form_field( 'a2_field_cf', array( 
+			'type' 			=> 'text', 
+			'class' 		=> array('a2-cf orm-row-wide form-row form-row-last'), 
+			'label' 		=> __('Fiscal Code', 'a2woo_piva_cf'),
+			'required'		=> false,
+			'placeholder' 	=> __(''),
+		), $checkout->get_value( 'a2_field_cf' ));
+	endif;
+        	
+	if ( $a2woo_piva_cf_show_sdi && $a2woo_piva_cf_show_sdi=='on' ) :
+		woocommerce_form_field( 'a2_field_sdi', array( 
+			'type' 			=> 'text', 
+			'class' 		=> array('a2-sdi orm-row-wide'), 
+			'label' 		=> __('SDI for electronic invoices', 'a2woo_piva_cf'),
+			'required'		=> false,
+			'placeholder' 	=> __(''),
+		), $checkout->get_value( 'a2_field_sdi' ));
+	endif;
+
 }
 
 /**
