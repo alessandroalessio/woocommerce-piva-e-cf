@@ -82,3 +82,7 @@ msgstr ""
 #: admin/plugin-options.php:47
 msgid "Show SDI for invoices field in Checkout Page"
 msgstr ""
+
+#: admin/plugin-options.php:47
+msgid "is mandatory"
+msgstr ""

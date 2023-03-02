@@ -14,11 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'Invalid request.' );
 }
 
-require 'vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 // Localization
 load_plugin_textdomain( 'a2woo_piva_cf', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
-
 
 // Admin interface
 require __DIR__ . '/admin/plugin-options.php';
@@ -30,6 +29,7 @@ function a2_woopivacf_checkout_field( $checkout ) {
 	$a2woo_piva_cf_show_pec_field = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_pec_field');
 	$a2woo_piva_cf_show_vat_field = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_vat_field');
 	$a2woo_piva_cf_show_cf = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_cf');
+	$a2woo_piva_cf_required = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_required');
 	$a2woo_piva_cf_show_sdi = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_sdi');
 
 	if ( $a2woo_piva_cf_show_pec_field && $a2woo_piva_cf_show_pec_field=='on' ) :
@@ -57,7 +57,7 @@ function a2_woopivacf_checkout_field( $checkout ) {
 			'type' 			=> 'text', 
 			'class' 		=> array('a2-cf orm-row-wide form-row form-row-last'), 
 			'label' 		=> __('Fiscal Code', 'a2woo_piva_cf'),
-			'required'		=> false,
+			'required'		=> ( $a2woo_piva_cf_required=='on' ) ? true : false,
 			'placeholder' 	=> __(''),
 		), $checkout->get_value( 'a2_field_cf' ));
 	endif;
