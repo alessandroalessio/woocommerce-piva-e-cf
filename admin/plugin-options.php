@@ -44,7 +44,7 @@ function a2_woocommerce_piva_cf_register_main_options_metabox() {
     // Fiscal Code Mandatory
     $main_options->add_field( array(
 		'name'    => __('Fiscal Code', 'a2woo_piva_cf').' '.__('is mandatory', 'a2woo_piva_cf'),
-		'desc'    => __('Show Fiscal Code field in Checkout Page', 'a2woo_piva_cf'),
+		'desc'    => __('Fiscal Code field in Checkout Page', 'a2woo_piva_cf'),
 		'id'      => 'a2woo_piva_cf_required',
 		'type'    => 'checkbox'
 	) );

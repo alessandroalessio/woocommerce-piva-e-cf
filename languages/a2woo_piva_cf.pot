@@ -86,3 +86,7 @@ msgstr ""
 #: admin/plugin-options.php:47
 msgid "is mandatory"
 msgstr ""
+
+#: admin/plugin-options.php:47
+msgid "is a required field"
+msgstr ""
