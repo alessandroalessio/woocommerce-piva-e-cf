@@ -82,7 +82,7 @@ function a2_woopivacf_checkout_field_process() {
 	global $woocommerce;
 	
 	$a2woo_piva_cf_required = ( cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_required') =='on' ) ? true : false;
-	if ( $a2woo_piva_cf_required ) {
+	if ( $a2woo_piva_cf_required && $_POST['a2_field_cf']=='' ) {
 	    wc_add_notice( '<strong>'.__('Fiscal Code', 'a2woo_piva_cf').'</strong> '.__('is a required field', 'a2woo_piva_cf'), 'error' );	
 	}
 
