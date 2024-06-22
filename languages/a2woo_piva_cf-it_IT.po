@@ -6,7 +6,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-piva-"
 "e-cf\n"
 "POT-Creation-Date: 2022-12-04T09:22:25+00:00\n"
-"PO-Revision-Date: 2023-03-02 12:00+0100\n"
+"PO-Revision-Date: 2024-06-22 11:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -93,3 +93,7 @@ msgstr "è obbligatorio"
 #: admin/plugin-options.php:47
 msgid "is a required field"
 msgstr "è un campo richiesto"
+
+#: admin/plugin-options.php:47
+msgid "Do you want an invoice?"
+msgstr "Desideri la fattura?"

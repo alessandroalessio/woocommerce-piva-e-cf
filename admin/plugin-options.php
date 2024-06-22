@@ -16,7 +16,15 @@ function a2_woocommerce_piva_cf_register_main_options_metabox() {
 	}
 
 	$main_options = new_cmb2_box( $args );
-	
+
+	// Request Invoice
+	$main_options->add_field( array(
+		'name'    => __('Request Invoice', 'a2woo_piva_cf'),
+		'desc'    => __('Show dropdown to request invoice in Checkout Page', 'a2woo_piva_cf'),
+		'id'      => 'a2woo_piva_cf_show_request_invoice_field',
+		'type'    => 'checkbox',
+	) );
+
     // PEC
     $main_options->add_field( array(
 		'name'    => __('Display PEC', 'a2woo_piva_cf'),

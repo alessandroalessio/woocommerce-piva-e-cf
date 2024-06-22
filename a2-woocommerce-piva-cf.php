@@ -26,11 +26,26 @@ require __DIR__ . '/admin/plugin-options.php';
 add_action('woocommerce_after_checkout_billing_form', 'a2_woopivacf_checkout_field');
 function a2_woopivacf_checkout_field( $checkout ) {
     
+	$a2woo_piva_cf_show_request_invoice_field = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_request_invoice_field');
 	$a2woo_piva_cf_show_pec_field = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_pec_field');
 	$a2woo_piva_cf_show_vat_field = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_vat_field');
 	$a2woo_piva_cf_show_cf = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_cf');
 	$a2woo_piva_cf_required = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_required');
 	$a2woo_piva_cf_show_sdi = cmb2_get_option('a2woo_piva_cf_main_options', 'a2woo_piva_cf_show_sdi');
+
+	if ( $a2woo_piva_cf_show_request_invoice_field && $a2woo_piva_cf_show_request_invoice_field=='on' ) :
+		woocommerce_form_field( 'a2_field_request_invoice', array( 
+			'type' 			=> 'select', 
+			'class' 		=> array('a2-pec orm-row-wide'), 
+			'label' 		=> __('Do you want an invoice?', 'a2woo_piva_cf'),
+			'required'		=> true,
+			'placeholder' 	=> __(''),
+			'options'		=> array(
+				'no'	=> __('No'),
+				'yes'	=> __('Yes'),
+			),
+		), $checkout->get_value( 'a2_field_pec' ));
+	endif;
 
 	if ( $a2woo_piva_cf_show_pec_field && $a2woo_piva_cf_show_pec_field=='on' ) :
 		woocommerce_form_field( 'a2_field_pec', array( 
@@ -43,11 +58,14 @@ function a2_woopivacf_checkout_field( $checkout ) {
 	endif;
 
 	if ( $a2woo_piva_cf_show_vat_field && $a2woo_piva_cf_show_vat_field=='on' ) :
+
+		$a2_field_piva_required = ( isset($_POST['a2_field_request_invoice']) && $_POST['a2_field_request_invoice']=='yes' ) ? true : false;
+
 		woocommerce_form_field( 'a2_field_piva', array( 
 			'type' 			=> 'text', 
 			'class' 		=> array('a2-piva orm-row-wide form-row form-row-first'), 
 			'label' 		=> __('Vat Number', 'a2woo_piva_cf'),
-			'required'		=> false,
+			'required'		=> $a2_field_piva_required,
 			'placeholder' 	=> __(''),
 		), $checkout->get_value( 'a2_field_piva' ));
 	endif;
@@ -86,6 +104,13 @@ function a2_woopivacf_checkout_field_process() {
 	    wc_add_notice( '<strong>'.__('Fiscal Code', 'a2woo_piva_cf').'</strong> '.__('is a required field', 'a2woo_piva_cf'), 'error' );	
 	}
 
+	if ( isset($_POST['a2_field_request_invoice']) && $_POST['a2_field_request_invoice']=='yes' ) {
+		$a2_field_piva = $_POST['a2_field_piva'];
+		if ( $a2_field_piva=='' || strlen($a2_field_piva)<9 ) {
+			wc_add_notice( '<strong>'.__('Vat Number', 'a2woo_piva_cf').'</strong> '.__('is a required field', 'a2woo_piva_cf'), 'error' );
+		}
+	}
+
 	// if ( ! $_POST['a2_field_pec'] )
     //     wc_add_notice( __( 'Compila' ), 'error' );
 }
@@ -95,6 +120,7 @@ function a2_woopivacf_checkout_field_process() {
  **/
 add_action('woocommerce_checkout_update_user_meta', 'a2_woopivacf_field_update_user_meta');
 function a2_woopivacf_field_update_user_meta( $user_id ) {
+	if ($user_id && $_POST['a2_field_request_invoice']) update_user_meta( $user_id, 'a2_field_request_invoice', esc_attr($_POST['a2_field_request_invoice']) );
 	if ($user_id && $_POST['a2_field_pec']) update_user_meta( $user_id, 'a2_field_pec', esc_attr($_POST['a2_field_pec']) );
 	if ($user_id && $_POST['a2_field_piva']) update_user_meta( $user_id, 'a2_field_piva', esc_attr($_POST['a2_field_piva']) );
 	if ($user_id && $_POST['a2_field_cf']) update_user_meta( $user_id, 'a2_field_cf', esc_attr($_POST['a2_field_cf']) );
@@ -106,6 +132,7 @@ function a2_woopivacf_field_update_user_meta( $user_id ) {
  **/
 add_action('woocommerce_checkout_update_order_meta', 'a2_woopivacf_checkout_field_update_order_meta');
 function a2_woopivacf_checkout_field_update_order_meta( $order_id ) {
+	if ($_POST['a2_field_request_invoice']) update_post_meta( $order_id, 'Request Invoice', esc_attr($_POST['a2_field_request_invoice']));
 	if ($_POST['a2_field_pec']) update_post_meta( $order_id, 'PEC', esc_attr($_POST['a2_field_pec']));
 	if ($_POST['a2_field_piva']) update_post_meta( $order_id, 'P.IVA', esc_attr($_POST['a2_field_piva']));
 	if ($_POST['a2_field_cf']) update_post_meta( $order_id, 'Cod. Fiscale', esc_attr($_POST['a2_field_cf']));
@@ -122,3 +149,14 @@ function a2_woopivacf_styles_method() {
 	</style>';
 }
 add_action( 'wp_head', 'a2_woopivacf_styles_method', 100 );
+
+
+/**
+ * Add javascript to checkout page
+ */
+function a2_woopivacf_checkout_script() {
+	if ( is_checkout() ) {
+		wp_enqueue_script( 'woocommerce-piva-cf',  plugin_dir_url(__FILE__).'assets/woocommerce-piva-e-cf.js' , null, '1.1', true );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'a2_woopivacf_checkout_script' );
